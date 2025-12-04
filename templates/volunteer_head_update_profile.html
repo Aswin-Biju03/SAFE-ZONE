@@ -1,0 +1,85 @@
+{% include 'volunteer_head_header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the form
+            const form = document.querySelector('form');
+        
+            // Add an event listener for the form submission
+            form.addEventListener('submit', function (e) {
+                // Input elements
+                const fname = form.querySelector('input[name="fname"]');
+                const lname = form.querySelector('input[name="lname"]');
+                const phone = form.querySelector('input[name="phone"]');
+                const email = form.querySelector('input[name="email"]');
+                const username = form.querySelector('input[name="username"]');
+                const password = form.querySelector('input[name="password"]');
+        
+                // Regex patterns
+                const namePattern = /^[A-Za-z ]+$/; // Letters and spaces only
+                const phonePattern = /^[0-9]{10}$/; // Exactly 10 digits
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Valid email
+                const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // At least 1 uppercase, 1 lowercase, 1 number, and 8+ characters
+        
+                // Validate First Name
+                if (!namePattern.test(fname.value.trim())) {
+                    alert('Please enter a valid first name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Last Name
+                if (!namePattern.test(lname.value.trim())) {
+                    alert('Please enter a valid last name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Phone
+                if (!phonePattern.test(phone.value.trim())) {
+                    alert('Please enter a valid 10-digit phone number.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Email
+                if (!emailPattern.test(email.value.trim())) {
+                    alert('Please enter a valid email address.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                
+            });
+        });
+        
+    </script>
+</head>
+<body>
+
+<center>
+    <br><br><br><br><br>
+    <h3>Update Profile</h3>
+    <form  method="post" enctype="multipart/form-data" >
+        <table>
+            <tr><th>First Name</th>
+                <td><input type="text"  value="{{data['upd'][0]['fname']}}"  name="fname" class="form-control" ></td></tr>
+            <tr><th>Last Name</th>
+                <td><input type="text"  value="{{data['upd'][0]['lname']}}" name="lname" class="form-control"></td></tr>
+            <th>Phone</th>
+            <td><input type="text" name="phone" value="{{data['upd'][0]['phone']}}" class="form-control"></td></tr>
+            <th>Email</th>
+            <td><input type="text" name="email" value="{{data['upd'][0]['email']}}" class="form-control"></td></tr>
+            <tr><th><input type="submit" name="add" class="btn btn-primary" value="Update"></th></tr>
+        </table>       
+        <br><br><br><br><br><br><br><br>
+    </form>
+
+</center>
+
+{% include 'footer.html' %}

@@ -1,0 +1,170 @@
+{%include 'public_header.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counselor Register</title>
+    <style>
+        body {
+          background-image: url("/static/assets/images/disasterbg2.jpg");
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+
+        .content-container {
+            background-color: rgba(255, 255, 255, 0.85); /* White with opacity for better readability */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: auto;
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the form
+            const form = document.querySelector('form');
+    
+            // Add an event listener for the form submission
+            form.addEventListener('submit', function (e) {
+                // Input elements
+                const fname = form.querySelector('input[name="fname"]');
+                const lname = form.querySelector('input[name="lname"]');
+                const phone = form.querySelector('input[name="phone"]');
+                const email = form.querySelector('input[name="email"]');
+                const address = form.querySelector('textarea[name="place"]');
+                const username = form.querySelector('input[name="username"]');
+                const password = form.querySelector('input[name="password"]');
+    
+                // Regex patterns
+                const namePattern = /^[A-Za-z ]+$/;
+                const phonePattern = /^[0-9]{10}$/;
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    
+                // Validate First Name
+                if (!namePattern.test(fname.value.trim())) {
+                    alert('Please enter a valid first name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+    
+                // Validate Last Name
+                if (!namePattern.test(lname.value.trim())) {
+                    alert('Please enter a valid last name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+    
+                // Validate Phone
+                if (!phonePattern.test(phone.value.trim())) {
+                    alert('Please enter a valid 10-digit phone number.');
+                    e.preventDefault();
+                    return;
+                }
+    
+                // Validate Email
+                if (!emailPattern.test(email.value.trim())) {
+                    alert('Please enter a valid email address.');
+                    e.preventDefault();
+                    return;
+                }
+    
+                // Validate Address
+                if (address.value.trim() === '') {
+                    alert('Address cannot be empty.');
+                    e.preventDefault();
+                    return;
+                }
+    
+                // Validate Username
+                if (username.value.trim() === '') {
+                    alert('Username cannot be empty.');
+                    e.preventDefault();
+                    return;
+                }
+    
+                // Validate Password
+                if (!passwordPattern.test(password.value.trim())) {
+                    alert('Password must contain at least 1 number, 1 uppercase, 1 lowercase letter, and be at least 8 characters long.');
+                    e.preventDefault();
+                    return;
+                }
+            });
+        });
+    </script>
+    
+</head>
+<body>
+    {% include 'public_header.html' %}
+
+    <center>        <br><br><br><br><br><br>
+
+        <div class="content-container">
+            <h2>Counselor Register</h2><br>
+            <form action="" method="post">
+                <table>
+                    <tr>
+                        <th>First Name</th>
+                        <td><input type="text" name="fname" placeholder="First Name"  class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td><input type="text" name="lname" placeholder="Last Name" class="form-control" ></td>
+                    </tr>
+                    <tr>
+                        <th>Phone No</th>
+                        <td><input type="text" name="phone" placeholder="Number" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td><input type="email" name="email" placeholder="abc@gmail.com"  class="form-control" ></td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td><textarea name="place" id="place" placeholder="Address" class="form-control" ></textarea></td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td><input type="text" name="username" class="form-control" placeholder="Username" ></td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td><input type="password" name="password" class="form-control" placeholder="Password"></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <br>
+                            <input type="submit" name="counselor_register" class="btn btn-primary" value="Register">
+                        </th>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <br><br><br><br><br><br>
+    </center>
+
+{%include 'footer.html'%}

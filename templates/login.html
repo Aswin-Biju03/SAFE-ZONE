@@ -1,0 +1,91 @@
+{%include 'public_header.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- <style>
+        h1,th{
+            color: aliceblue        ;
+        }
+    </style> -->
+    <style>
+        body {
+          background-image: url("/static/assets/images/disasterbg2.jpg");
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+  .content-container {
+    background-color: rgba(255, 255, 255, 0.85); /* White with opacity for better readability */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+  }
+
+  table {
+    margin: auto;
+  }
+
+  th, td {
+    padding: 10px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+    
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Select the form
+        const form = document.querySelector('form');
+    
+        // Add event listener for form submission
+        form.addEventListener('submit', function (e) {
+            // Input elements
+            const username = form.querySelector('input[name="username"]');
+            const password = form.querySelector('input[name="password"]');
+    
+            // Validation: Check if username and password are not empty
+            if (username.value.trim() === "") {
+                alert("Please enter your username.");
+                e.preventDefault(); // Prevent form submission
+                return;
+            }
+    
+            if (password.value.trim() === "") {
+                alert("Please enter your password.");
+                e.preventDefault(); // Prevent form submission
+                return;
+            }
+        });
+    });
+    
+    </script>
+</head>
+<body><center>
+  <br><br>
+    <div class="content-container">
+    <h1>Login </h1>     
+    <form  method="post">
+        <table>
+            <tr><th>username</th>
+            <td><input type="text" name="username" placeholder="Enter Your Username"  class="form-control" ></td></tr>
+            <tr><th>password</th>
+            <td><input type="password" name="password" placeholder="Enter Your Password" class="form-control"></td></tr>
+            <tr><th><input type="submit" value="Login" name="submit" class="btn btn-primary"></th></tr>
+        </table>
+    </div><br><br><br><br><br><br><br>
+
+        
+    </form>
+    <br><br><br>
+  </center>
+</body>
+</html>
+{%include 'footer.html'%}

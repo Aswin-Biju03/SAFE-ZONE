@@ -1,0 +1,44 @@
+{% include 'volunteer_head_header.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint</title>
+</head>
+<body>
+    <center>    <br><br><br><br><br>
+
+        <form action="" method="post">
+            <h3>Issue Details</h3>
+            <table class="t">
+                <tr>
+                    <th>Place:</th>
+                    <td>{{ data['issue'][0]['place'] }}</td>
+                </tr>
+                <tr>
+                    <th >Issue:</th>
+                    <td>{{ data['issue'][0]['issue'] }}</td>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <td>{{ data['issue'][0]['date'] }}</td>
+                </tr>
+                <tr>
+                    <th >Status:</th>
+                    <td>{{ data['issue'][0]['status'] }}</td>
+                </tr>
+                <tr>
+                    <th>Helpfulness:</th>
+                    <td>{{ data['issue'][0]['helpfulness'] }}</td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Back" name="back"></td>
+                </tr>
+            </table>
+        </form><br><br><br><br><br><br><br><br>
+    </center>
+</body>
+</html>
+{% include 'footer.html' %}

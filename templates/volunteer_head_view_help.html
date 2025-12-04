@@ -1,0 +1,82 @@
+{% include 'volunteer_head_header.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Details</title>
+    <style>
+        body {
+          background-image: url("/static/assets/images/disasterbg2.jpg");
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+  .content-container {
+    background-color: rgba(255, 255, 255, 0.85); /* White with opacity for better readability */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: auto;
+    margin-top: 100px;
+    text-align: center;
+  }
+
+  table {
+    margin: auto;
+  }
+
+  th, td {
+    padding: 10px;
+    color: #000;
+  }
+
+  h3 {
+    margin-bottom: 20px;
+    color: #000;
+  }
+    
+    </style>
+</head>
+<body>
+    <center>
+        <br><br><br><br><br>
+        <div class="content-container">
+        <form action="" method="post">
+            <h3>Issue Details</h3>
+            <table >
+                <tr>
+                    <th align="left">Place:</th>
+                    <td>{{ data['issue'][0]['place'] }}</td>
+                </tr>
+                <tr>
+                    <th align="left">Issue:</th>
+                    <td>{{ data['issue'][0]['issue'] }}</td>
+                </tr>
+                <tr>
+                    <th align="left">Date:</th>
+                    <td>{{ data['issue'][0]['date'] }}</td>
+                </tr>
+                <tr>
+                    <th align="left">Status:</th>
+                    <td>{{ data['issue'][0]['status'] }}</td>
+                </tr>
+                <tr>
+                    <th align="left">Helpfulness:</th>
+                    {%if data['issue'][0]['helpfulness']%}
+                    <td>{{ data['issue'][0]['helpfulness'] }}</td>
+                    {%else%}
+                    <td>No Help Added</td>
+                    {%endif%}
+                </tr>
+                <!-- <tr>
+                    <td><input type="submit" value="Back" name="back"></td>
+                </tr> -->
+            </table>
+        </form>
+    </div><br><br><br><br><br><br><br><br><br><br>
+    </center>
+</body>
+</html>
+{% include 'footer.html' %}

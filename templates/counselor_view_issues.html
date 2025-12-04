@@ -1,0 +1,51 @@
+{% include 'counselor_header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Issues</title>
+</head>
+<body>
+<style>
+    
+    h3,th,td{color: aliceblue;}
+    p{color: aliceblue;}
+    table{border: 2px solid grey ;border-collapse: collapse;font-family: Arial, Helvetica, sans-serif;background-color:#0f054c;}
+        td,th{border: 1px solid grey;text-align: center;padding: 10px 20px;font-family: Arial, Helvetica, sans-serif;color: rgb(255, 255, 255);}
+    
+</style>
+<center>
+    <br><br><br><br><br>
+    <h3>Issues</h3>
+    <form action="" method="post">
+        {% if data['issues']%}
+        <table class="t">
+            <tr><th>index</th>
+                <th>Place</th>
+                <th>Issues</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Add Help</th>
+            </tr>
+            {%for i in data['issues']%}
+            <tr><td>{{loop.index}}</td>
+                <td>{{i['place']}}</td>
+                <td>{{i['issue']}}</td>
+                <td>{{i['date']}}</td>
+                <td>{{i['status']}}</td>
+                <td><a href="counselor_add_help?issue_id={{i['issue_id']}}" class="btn btn-primary">Add</a></td>
+            </tr>
+            {%endfor%}
+        </table>
+        {% else %}
+<p>        No Issues Registered
+</p>
+        {%endif%}
+       
+    </form>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    <br><br><br><br><br><br><br><br><br><br>
+</center>
+{% include 'footer.html' %}

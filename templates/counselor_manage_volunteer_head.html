@@ -1,0 +1,179 @@
+{% include 'counselor_header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Volunteer Head</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the form
+            const form = document.querySelector('form');
+        
+            // Add an event listener for the form submission
+            form.addEventListener('submit', function (e) {
+                // Input elements
+                const fname = form.querySelector('input[name="fname"]');
+                const lname = form.querySelector('input[name="lname"]');
+                const phone = form.querySelector('input[name="phone"]');
+                const email = form.querySelector('input[name="email"]');
+                const place = form.querySelector('textarea[name="place"]') || form.querySelector('select[name="place_id"]');
+                const username = form.querySelector('input[name="username"]');
+                const password = form.querySelector('input[name="password"]');
+        
+                // Regex patterns
+                const namePattern = /^[A-Za-z ]+$/; // Letters and spaces only
+                const phonePattern = /^[0-9]{10}$/; // Exactly 10 digits
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Valid email
+                const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // At least 1 uppercase, 1 lowercase, 1 number, and 8+ characters
+        
+                // Validate First Name
+                if (!namePattern.test(fname.value.trim())) {
+                    alert('Please enter a valid first name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Last Name
+                if (!namePattern.test(lname.value.trim())) {
+                    alert('Please enter a valid last name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Phone
+                if (!phonePattern.test(phone.value.trim())) {
+                    alert('Please enter a valid 10-digit phone number.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Email
+                if (!emailPattern.test(email.value.trim())) {
+                    alert('Please enter a valid email address.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Place (dropdown)
+                if (place.tagName === 'SELECT' && place.value === '') {
+                    alert('Please select a valid place.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Username (only for Add form)
+                if (username && username.value.trim() === '') {
+                    alert('Username cannot be empty.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Password (only for Add form)
+                if (password && !passwordPattern.test(password.value.trim())) {
+                    alert(
+                        'Password must contain at least 1 number, 1 uppercase letter, 1 lowercase letter, and be at least 8 characters long.'
+                    );
+                    e.preventDefault();
+                    return;
+                }
+            });
+        });
+        
+    </script>
+    
+    
+</head>
+<body>
+
+<center>
+    <br><br><br><br><br>
+    <h3>Manage Volunteer Head</h3><br>
+    <form  method="post" enctype="multipart/form-data" >
+        {%if data['upd']%}
+        <table>
+            <h4>Update Details</h4>
+            <tr><th>First Name</th>
+                <td><input type="text"  value="{{data['upd'][0]['fname']}}"  name="fname" class="form-control" ></td></tr>
+            <tr><th>Last Name</th>
+                <td><input type="text"  value="{{data['upd'][0]['lname']}}"  name="lname" class="form-control" ></td></tr>
+            <th>Phone</th>
+            <td><input type="text" name="phone" value="{{data['upd'][0]['phone']}}" class="form-control"></td></tr>
+            <th>Email</th>
+            <td><input type="text" name="email" value="{{data['upd'][0]['email']}}" class="form-control" ></td></tr>
+            <tr><th>Place</th><td><select name="place_id" id="" class="form-select" >
+                <option value="" selected disabled class="form-select">options</option>
+                {%for i in data['place']%}
+                <option value="{{i['place_id']}}" class="form-select">{{i['place']}}</option>
+                {%endfor%}
+            </select></td></tr>
+            <tr><th><input type="submit" name="up" class="btn btn-primary" value="update"></th></tr>
+        </table>
+        {%else%}
+        <table>
+            <tr><th>First Name</th>
+                <td><input type="text" name="fname" placeholder="First Name"  class="form-control" ></td></tr>
+            <tr><th>Last Name</th>
+                <td><input type="text" name="lname" placeholder="Last Name" class="form-control" ></td></tr>
+            <tr><th>Phone</th>
+                <td><input type="text" name="phone" class="form-control"  placeholder="Number" ></td></tr>
+            <tr><th>Email</th>
+                <td><input type="email" name="email" placeholder="abc@gmail.com" class="form-control" ></td></tr>
+            <tr><th>Place</th><td><select name="place_id" id="" class="form-select" >
+                <option value="" selected disabled class="form-select">options</option>
+                {%for i in data['place']%}
+                <option value="{{i['place_id']}}" class="form-select">{{i['place']}}</option>
+                {%endfor%}
+            </select></td></tr>
+            <tr><th>username</th>
+                <td><input type="text" name="username" placeholder="username"  class="form-control" ></td></tr>
+            <tr><th>password</th>
+                <td><input type="password" name="password" placeholder="password" class="form-control" ></td></tr>
+            <tr><th><input type="submit" name="add" class="btn btn-primary" value="Add"></th></tr>
+        </table>
+        {%endif%}
+        <br>
+        <h4>Volunteer Head List</h4>
+        <table class="t">
+            <tr ><th class="t1">Index</th>
+            <th class="t1">Name</th>
+            <th class="t1">Place</th>
+            <th class="t1">Phone</th>
+            <th class="t1">Email</th>
+            <th class="t1">Actions</th>
+        </tr>
+            {%for i in data['resource']%}
+            <tr>
+                <td class="t1">{{loop.index}}</td>
+                <td class="t1">{{i['fname']}} {{i['lname']}}</td>
+                <td class="t1">{{i['place']}}</td>
+                <td class="t1">{{i['phone']}}</td>
+                <td class="t1">{{i['email']}}</td>
+                <td class="t1">
+                    <a href="javascript:void(0)" class="btn btn-danger" onclick="deleteConfirm('{{i['vhead_id']}}','{{ i['login_id'] }}')">delete</a>
+                    <a href="javascript:void(0)" class="btn btn-primary" onclick="updateConfirm('{{i['vhead_id']}}','{{ i['login_id'] }}')">update</a>
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+        <br><br><br><br><br><br><br><br><br><br><br>
+    </form>
+
+</center>
+
+{% include 'footer.html' %}
+
+<script>
+    function deleteConfirm(vhead_id, login_id) {
+        if (confirm('Are you sure you want to delete this record?')) {
+            window.location.href = `?action=delete&vhead_id=${vhead_id}&lid=${login_id}`;
+        }
+    }
+
+    function updateConfirm(vhead_id, login_id) {
+        if (confirm('Are you sure you want to update this record?')) {
+            window.location.href = `?action=update&vhead_id=${vhead_id}&lid=${login_id}`;
+        }
+    }
+</script>
+

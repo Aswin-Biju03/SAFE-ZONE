@@ -1,0 +1,189 @@
+{% include 'volunteer_head_header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Volunteer</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Select the form
+            const form = document.querySelector('form');
+        
+            // Add event listener for form submission
+            form.addEventListener('submit', function (e) {
+                // Input elements
+                const fname = form.querySelector('input[name="fname"]');
+                const lname = form.querySelector('input[name="lname"]');
+                const phone = form.querySelector('input[name="phone"]');
+                const email = form.querySelector('input[name="email"]');
+                const place = form.querySelector('select[name="place_id"]');
+                const username = form.querySelector('input[name="username"]');
+                const password = form.querySelector('input[name="password"]');
+                const action = form.querySelector('input[name="action"]');
+        
+                // Regex patterns
+                const namePattern = /^[A-Za-z ]+$/; // Letters and spaces only
+                const phonePattern = /^[0-9]{10}$/; // Exactly 10 digits
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Valid email
+                const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // At least 1 uppercase, 1 lowercase, 1 number, and 8+ characters
+        
+                // Validate First Name
+                if (!namePattern.test(fname.value.trim())) {
+                    alert('Please enter a valid first name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Last Name
+                if (!namePattern.test(lname.value.trim())) {
+                    alert('Please enter a valid last name (letters and spaces only).');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Phone
+                if (!phonePattern.test(phone.value.trim())) {
+                    alert('Please enter a valid 10-digit phone number.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Email
+                if (!emailPattern.test(email.value.trim())) {
+                    alert('Please enter a valid email address.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // Validate Place
+                if (!place.value) {
+                    alert('Please select a valid place.');
+                    e.preventDefault();
+                    return;
+                }
+        
+                // For Add Operation Only (Check for Username and Password)
+                if (action && action.value === 'add') {
+                    // Validate Username
+                    if (!username.value.trim()) {
+                        alert('Username cannot be empty.');
+                        e.preventDefault();
+                        return;
+                    }
+        
+                    // Validate Password
+                    if (!passwordPattern.test(password.value.trim())) {
+                        alert(
+                            'Password must contain at least 1 number, 1 uppercase letter, 1 lowercase letter, and be at least 8 characters long.'
+                        );
+                        e.preventDefault();
+                        return;
+                    }
+                }
+        
+                // For Update Operation Only (Check for Password)
+                if (action && action.value === 'update') {
+                    // Validate Password
+                    if (!passwordPattern.test(password.value.trim())) {
+                        alert(
+                            'Password must contain at least 1 number, 1 uppercase letter, 1 lowercase letter, and be at least 8 characters long.'
+                        );
+                        e.preventDefault();
+                        return;
+                    }
+                }
+        
+                // For Delete Operation Only (Check for Confirmation)
+                if (action && action.value === 'delete') {
+                    // Validate Confirmation
+                    const confirm = window.confirm('Are you sure you want to delete this volunteer?');
+                    if (!confirm) {
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+
+<center>
+    <br><br><br><br><br>
+    <h3>Manage Volunteer</h3>
+    <form  method="post" enctype="multipart/form-data" >
+        {%if data['upd']%}
+        <table>
+            <h4>Update Details</h4>
+            <tr><th>First Name</th>
+                <td><input type="text"  value="{{data['upd'][0]['fname']}}" placeholder="First Name" name="fname" class="form-control"></td></tr>
+            <tr><th>Last Name</th>
+                <td><input type="text"  value="{{data['upd'][0]['lname']}}" placeholder="Last Name" name="lname" class="form-control"></td></tr>
+            <th>Phone</th>
+            <td><input type="text" name="phone" value="{{data['upd'][0]['phone']}}" class="form-control"></td></tr>
+            <th>Email</th>
+            <td><input type="text" name="email" value="{{data['upd'][0]['email']}}" placeholder="abc@gmail.com" class="form-control" ></td></tr>
+            <tr><th>Place</th><td><select name="place_id" id="" class="form-select" >
+                <option value="" selected disabled class="form-select">options</option>
+                {%for i in data['place']%}
+                <option value="{{i['place_id']}}" class="form-select">{{i['place']}}</option>
+                {%endfor%}
+            </select></td></tr>
+            <tr><th><input type="submit" name="up" class="btn btn-primary" value="update"></th></tr>
+        </table>
+        {%else%}
+        <table>
+            <tr><th>First Name</th>
+                <td><input type="text" name="fname" placeholder="First Name" class="form-control"></td></tr>
+            <tr><th>Last Name</th>
+                <td><input type="text" name="lname" placeholder="Last Name" class="form-control" ></td></tr>
+            <tr><th>Phone</th>
+                <td><input type="text" name="phone" placeholder="Number" class="form-control" ></td></tr>
+            <tr><th>Email</th>
+                <td><input type="email" name="email" placeholder="abc@gmail.com" class="form-control" ></td></tr>
+            <tr><th>Place</th><td><select name="place_id" id="" class="form-select" >
+                <option value="" selected disabled class="form-select">options</option>
+                {%for i in data['place']%}
+                <option value="{{i['place_id']}}" class="form-select">{{i['place']}}</option>
+                {%endfor%}
+            </select></td></tr>
+            <tr><th>username</th>
+                <td><input type="text" name="username" placeholder="username" class="form-control" ></td></tr>
+            <tr><th>password</th>
+                <td><input type="password" name="password" placeholder="password" class="form-control" ></td></tr>
+            <tr><th><input type="submit" name="add" class="btn btn-primary" value="Add"></th></tr>
+        </table>
+        {%endif%}
+        <br>
+        <h4>Volunteer List</h4>
+        <table class="t">
+            <tr ><th class="t1">Index</th>
+            <th class="t1">Name</th>
+            <th class="t1">Place</th>
+            <th class="t1">Phone</th>
+            <th class="t1">Email</th>
+            <th class="t1">Actions</th>
+        </tr>
+            {%for i in data['resource']%}
+            <tr>
+                <td class="t1">{{loop.index}}</td>
+                <td class="t1">{{i['fname']}} {{i['lname']}}</td>
+                <td class="t1">{{i['place']}}</td>
+                <td class="t1">{{i['phone']}}</td>
+                <td class="t1">{{i['email']}}</td>
+                <td class="t1">
+                    <a href="?action=delete&volunteer_id={{i['volunteer_id']}}&lid={{ i['login_id'] }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this volunteer?')">delete</a>
+                    <a href="?action=update&volunteer_id={{i['volunteer_id']}}&lid={{ i['login_id'] }}" class="btn btn-success" onclick="return confirm('Are you sure you want to update this volunteer?')">update</a>
+                </td>
+            </tr>
+            {%endfor%}
+        </table>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+    </form>
+
+</center>
+
+{% include 'footer.html' %}
+

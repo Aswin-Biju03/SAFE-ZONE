@@ -1,0 +1,32 @@
+{% include 'volunteer_head_header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodation</title>
+</head>
+<body>
+<center>
+    <br><br><br><br><br>
+    <h3>Accommodations</h3><br>
+    <form action="" method="post">
+        {% if data['issues'] %}
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                {% for i in data['issues'] %}
+                <div style="border: 2px solid grey; border-radius: 10px; padding: 20px; background-color: #404041; width: 300px; text-align: center; color: aliceblue; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                    <img src="{{ i['image'] }}" alt="Person Image" style="width: 100%; height: auto; border-radius: 10px;">
+                    <h3>{{ i['name'] }}</h3>
+                    <p><strong>Phone:</strong> {{ i['phone'] }} <br>
+                    <strong>Email:</strong> {{ i['email'] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No Accommodations Yet!</p>
+        {% endif %}
+    </form>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</center>
+
+{% include 'footer.html' %}
